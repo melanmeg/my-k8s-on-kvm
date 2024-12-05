@@ -5,6 +5,10 @@
 ## prepare
 
 ```bash
+$ terraform providers lock -platform=linux/amd64
+```
+
+```bash
 # Terraform 対象サーバーで実行
 $ echo 'security_driver = "none"' | sudo tee /etc/libvirt/qemu.conf > /dev/null
 $ sudo systemctl restart libvirtd
