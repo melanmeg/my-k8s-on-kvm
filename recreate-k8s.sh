@@ -62,10 +62,10 @@ node_ready_health_check() {
     echo ""
 }
 
-# run_delete_k8s
+run_delete_k8s
 run_terraform
-# run_ansible_playbook
-# node_ready_health_check
+run_ansible_playbook
+node_ready_health_check
 
 # End the timer
 end_time=$(date +%s)
