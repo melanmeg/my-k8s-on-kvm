@@ -1,5 +1,6 @@
 # my-k8s-ansible
-（自分用）k8s構築用Ansible
+
+（自分用）k8s 構築用 Ansible
 
 ## prepare
 
@@ -15,15 +16,18 @@ $ sudo apt update -y \
 
 ```bash
 # haproxy と keepalived の設定ファイルの Jinja テンプレートを生成する
-$ cd ./files/lb/config_gen && \
+$ cd ./ansible/files/lb/config_gen
+$ rm -rf .venv && \
   python -m venv .venv && \
   source .venv/bin/activate && \
+  pip install --upgrade pip && \
   pip install -r requirements.txt && \
   python haproxy.py && \
   python keepalived.py
 ```
 
 ## Clean Up
+
 ```bash
 # nfsを使っている場合、base2で実行する
 $ sudo rm -rf /mnt/nfsshare/k8s/share/*
