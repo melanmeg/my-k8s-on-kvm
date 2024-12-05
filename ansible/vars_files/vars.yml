@@ -8,6 +8,7 @@ variables:
   k8s:
     all_node:
       tasks:
+        - common/nfs-client.yml
         - common/k8s.yml
     cp:
       tasks:
@@ -23,4 +24,5 @@ variables:
         - cp/label-node.yml
         - cp/cilium.yml
         - cp/argocd.yml
+        # - cp/postgres-operator.yml
         - cp/role.yml
