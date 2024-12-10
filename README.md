@@ -30,6 +30,12 @@ $ rm -rf .venv && \
   python keepalived.py
 ```
 
+## Usage
+
+```bash
+$ ./recreate-k8s.sh
+```
+
 ## Clean Up
 
 ```bash
