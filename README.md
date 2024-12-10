@@ -5,7 +5,7 @@
 ## prepare
 
 ```bash
-$ terraform providers lock -platform=linux/amd64
+$ terraform providers lock -platform=linux_amd64
 ```
 
 ```bash
