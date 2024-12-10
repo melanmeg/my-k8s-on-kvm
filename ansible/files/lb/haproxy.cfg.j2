@@ -54,6 +54,22 @@ backend argocd
   server argocd-2 {{ hostvars['k8s-wk-2']['ansible_default_ipv4']['address'] }}:30001 check
   server argocd-3 {{ hostvars['k8s-wk-3']['ansible_default_ipv4']['address'] }}:30001 check
 
+# grafana
+frontend grafana
+  mode tcp
+  option tcplog
+  bind 192.168.11.161:8082
+  default_backend grafana
+backend grafana
+  mode tcp
+  option tcplog
+  option tcp-check
+  balance roundrobin
+  default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100
+  server grafana-1 {{ hostvars['k8s-wk-1']['ansible_default_ipv4']['address'] }}:30002 check
+  server grafana-2 {{ hostvars['k8s-wk-2']['ansible_default_ipv4']['address'] }}:30002 check
+  server grafana-3 {{ hostvars['k8s-wk-3']['ansible_default_ipv4']['address'] }}:30002 check
+
 # minio
 frontend minio
   mode tcp
@@ -70,18 +86,18 @@ backend minio
   server minio-2 {{ hostvars['k8s-wk-2']['ansible_default_ipv4']['address'] }}:30003 check
   server minio-3 {{ hostvars['k8s-wk-3']['ansible_default_ipv4']['address'] }}:30003 check
 
-# grafana
-frontend grafana
+# longhorn
+frontend longhorn
   mode tcp
   option tcplog
-  bind 192.168.11.161:8082
-  default_backend grafana
-backend grafana
+  bind 192.168.11.161:8087
+  default_backend longhorn
+backend longhorn
   mode tcp
   option tcplog
   option tcp-check
   balance roundrobin
   default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100
-  server grafana-1 {{ hostvars['k8s-wk-1']['ansible_default_ipv4']['address'] }}:30002 check
-  server grafana-2 {{ hostvars['k8s-wk-2']['ansible_default_ipv4']['address'] }}:30002 check
-  server grafana-3 {{ hostvars['k8s-wk-3']['ansible_default_ipv4']['address'] }}:30002 check
+  server longhorn-1 {{ hostvars['k8s-wk-1']['ansible_default_ipv4']['address'] }}:30007 check
+  server longhorn-2 {{ hostvars['k8s-wk-2']['ansible_default_ipv4']['address'] }}:30007 check
+  server longhorn-3 {{ hostvars['k8s-wk-3']['ansible_default_ipv4']['address'] }}:30007 check
