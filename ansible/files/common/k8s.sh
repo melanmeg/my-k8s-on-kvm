@@ -13,7 +13,8 @@ sudo modprobe overlay
 sudo modprobe br_netfilter
 
 # Install kubeadm, kubelet and kubectl
-sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+# sudo apt-get update # already latest packages list
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 sudo mkdir -p /etc/apt/keyrings
 sudo chmod 755 /etc/apt/keyrings
 curl -fsSL https://pkgs.k8s.io/core:/stable:/${KUBE_KEY_VERSION}/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg

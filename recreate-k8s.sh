@@ -2,8 +2,6 @@
 
 # Set the variables
 TERRAFORM_DIR=./terraform/env
-ANSIBLE_DIR=./ansible
-KEY_FILE_PATH=~/.ssh/main
 SSH_ALIAS_CP1=test-cp1
 
 # Start the timer
@@ -30,7 +28,7 @@ run_terraform() {
 # Function to run ansible playbook
 run_ansible_playbook() {
     echo "Starting Running the ansible playbook."
-    ansible-playbook --key-file $KEY_FILE_PATH -i $ANSIBLE_DIR/inventory.yml $ANSIBLE_DIR/playbook.yml
+    ./ansible/ansible.sh
     echo "Completed Running the ansible playbook."
     echo ""
 }
