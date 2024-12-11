@@ -1,0 +1,18 @@
+- name: mkfs.xfs /dev/vdb
+  ansible.builtin.shell: mkfs.xfs /dev/vdb
+
+- name: file
+  ansible.builtin.file:
+    path: /mnt/longhorn-xfs
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: mount /dev/vdb /mnt/longhorn-xfs
+  ansible.builtin.shell: mount /dev/vdb /mnt/longhorn-xfs
+
+- name: lineinfile /etc/fstab
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    line: "/dev/vdb /mnt/longhorn-xfs xfs defaults 0 0"
