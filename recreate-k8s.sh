@@ -3,9 +3,11 @@
 # Set the variables
 TERRAFORM_DIR=./terraform/env
 SSH_ALIAS_CP1=test-cp1
+BASE_IP=192.168.11.12
 
-# Start the timer
-start_time=$(date +%s)
+# prepare
+rm -f ~/.ssh/known_hosts ~/.ssh/known_hosts.old
+ssh-keyscan "$BASE_IP" >> ~/.ssh/known_hosts
 
 # Function to delete the k8s cluster
 run_delete_k8s() {
@@ -61,12 +63,17 @@ node_ready_health_check() {
 }
 
 run_delete_k8s
+
+# Start the timer
+start_time=$(date +%s)
+
 run_terraform
 run_ansible_playbook
 node_ready_health_check
 
 # End the timer
 end_time=$(date +%s)
+
 execution_time=$((end_time - start_time))
 
 echo "Total Execution time: ${execution_time} seconds"
