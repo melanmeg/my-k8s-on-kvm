@@ -37,7 +37,7 @@ module k8s-wk-libvirt {
 
   vm_count  = 3
   vm_name   = "test-k8s-wk" # $VM_NAME-$VM_COUNT
-  vcpu      = 3
+  vcpu      = 2 # 4
   memory    = 4096 # 16384
   size      = 30 # GiB
   data_disk = {
