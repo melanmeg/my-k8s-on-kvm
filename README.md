@@ -53,3 +53,7 @@ $ ./recreate-k8s.sh
 # nfsを使っている場合、base2で実行する
 $ sudo rm -rf /mnt/nfsshare/k8s/share/*
 ```
+
+# 33
+
+# 133
