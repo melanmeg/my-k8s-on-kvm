@@ -4,9 +4,7 @@
 
 ## prepare
 
-```bash
-$ terraform providers lock -platform=linux_amd64
-```
+- 初めに一回実施
 
 ```bash
 # Terraform 対象サーバーで実行
@@ -16,6 +14,12 @@ $ sudo systemctl restart libvirtd
 # Terraform 実行サーバーで実行
 $ sudo apt update -y \
   sudo apt install -y mkisofs
+```
+
+- 初めに一回実施
+
+```bash
+$ terraform providers lock -platform=linux_amd64
 ```
 
 ```bash
@@ -28,6 +32,13 @@ $ rm -rf .venv && \
   pip install -r requirements.txt && \
   python haproxy.py && \
   python keepalived.py
+```
+
+- 定期的に実施
+
+```bash
+$ cd terraform/modules/common/
+$ wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
 ```
 
 ## Usage
