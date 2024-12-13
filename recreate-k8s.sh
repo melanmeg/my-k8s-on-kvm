@@ -13,7 +13,7 @@ ssh-keyscan "$BASE_IP" >> ~/.ssh/known_hosts
 run_delete_k8s() {
     echo "Deleting the k8s cluster..."
     terraform -chdir=$TERRAFORM_DIR init -input=false
-    terraform -chdir=$TERRAFORM_DIR destroy -auto-approve -input=false
+    terraform -chdir=$TERRAFORM_DIR destroy --parallelism=30 -auto-approve -input=false
     echo "Completed deleting the k8s cluster."
     echo ""
 }
@@ -22,7 +22,7 @@ run_delete_k8s() {
 run_terraform() {
     echo "Recreating the k8s cluster..."
     terraform -chdir=$TERRAFORM_DIR init -input=false
-    terraform -chdir=$TERRAFORM_DIR apply -auto-approve -input=false
+    terraform -chdir=$TERRAFORM_DIR apply --parallelism=30 -auto-approve -input=false
     echo "Completed recreating the k8s cluster."
     echo ""
 }
