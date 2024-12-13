@@ -8,7 +8,7 @@
     mode: "0755"
 
 - name: Execute join
-  shell: kubeadm join --config ~/join_kubeadm_cp.yaml
+  shell: kubeadm join --config ~/join_kubeadm_cp.yaml --v=0 --control-plane=false --skip-phases=addon/kube-proxy,certs
   ignore_errors: true
 
 - name: k9s

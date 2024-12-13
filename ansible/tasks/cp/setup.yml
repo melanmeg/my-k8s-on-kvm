@@ -20,7 +20,7 @@
   ignore_errors: true
 
 - name: Execute kubeadm init
-  ansible.builtin.shell: kubeadm init --config /tmp/init_kubeadm.yaml --skip-phases=addon/kube-proxy
+  ansible.builtin.shell: kubeadm init --config /tmp/init_kubeadm.yaml --v=0 --skip-phases=addon/kube-proxy
 
 - name: file
   ansible.builtin.file:

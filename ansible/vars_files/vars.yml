@@ -8,7 +8,7 @@ variables:
   k8s:
     all_node:
       tasks:
-        - common/nfs-client.yml
+        # - common/nfs-client.yml
         - common/k8s.yml
     cp:
       tasks:
@@ -19,11 +19,11 @@ variables:
     worker:
       tasks:
         - wk/join.yml
-        - wk/setup-disk.yml
+        # - wk/setup-disk.yml
     cp_after:
       tasks:
-        - cp/label-node.yml
-        - cp/role.yml
+        # - cp/label-node.yml
+        # - cp/role.yml
         - cp/cilium.yml
         # - cp/argocd.yml
         # - cp/postgres-operator.yml
