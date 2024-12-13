@@ -61,8 +61,6 @@ node_ready_health_check() {
 
 run_delete_k8s
 
-sleep 3
-
 # Start the timer
 start_time=$(date +%s)
 
