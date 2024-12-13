@@ -1,7 +1,4 @@
 - name: shell
-  ansible.builtin.shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-
-- name: shell
   ansible.builtin.shell: helm repo add cilium https://helm.cilium.io/
 
 - name: Execute helm
