@@ -22,10 +22,18 @@ resource "libvirt_domain" "domain" {
   }
 
   dynamic "disk" {
-    for_each = var.data_disk.enable ? [1] : []
+    for_each = var.data_disk_1.enable ? [1] : []
     content {
       scsi      = false
-      volume_id = libvirt_volume.data-volume[count.index].id
+      volume_id = libvirt_volume.data-volume-1[count.index].id
+    }
+  }
+
+  dynamic "disk" {
+    for_each = var.data_disk_2.enable ? [1] : []
+    content {
+      scsi      = false
+      volume_id = libvirt_volume.data-volume-2[count.index].id
     }
   }
 

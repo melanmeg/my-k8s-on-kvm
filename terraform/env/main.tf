@@ -35,17 +35,21 @@ module k8s-cp-libvirt {
 module k8s-wk-libvirt {
   source = "../modules/vm"
 
-  vm_count  = 3
-  vm_name   = "test-k8s-wk" # $VM_NAME-$VM_COUNT
-  vcpu      = 2 # 4
-  memory    = 4096 # 16384
-  size      = 30 # GiB
-  data_disk = {
-    enable  = true
-    size    = 40 # GiB
+  vm_count    = 3
+  vm_name     = "test-k8s-wk" # $VM_NAME-$VM_COUNT
+  vcpu        = 2 # 4
+  memory      = 4096 # 16384
+  size        = 30 # GiB
+  data_disk_1 = {
+    enable = true
+    size   = 20 # GiB
   }
-  autostart = false
-  first_ip  = "192.168.11.151" # $FIRST_IP + $VM_COUNT
+  data_disk_2 = {
+    enable = true
+    size   = 20 # GiB
+  }
+  autostart   = false
+  first_ip    = "192.168.11.151" # $FIRST_IP + $VM_COUNT
 
   base_volume_id = module.k8s-common-libvirt.base_volume_id
   pool_name      = module.k8s-common-libvirt.pool_name

@@ -13,7 +13,17 @@ variable memory {
 variable size {
   type = number
 }
-variable "data_disk" {
+variable "data_disk_1" {
+  type = object({
+    enable = bool
+    size   = number
+  })
+  default = {
+    enable = false
+    size   = 10
+  }
+}
+variable "data_disk_2" {
   type = object({
     enable = bool
     size   = number
