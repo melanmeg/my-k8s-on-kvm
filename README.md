@@ -50,6 +50,7 @@ $ ./recreate-k8s.sh
 ## Clean Up
 
 ```bash
+$ terraform -chdir=./terraform/env destroy -auto-approve -input=false
 # nfsを使っている場合、base2で実行する
 $ sudo rm -rf /mnt/nfsshare/k8s/share/*
 ```

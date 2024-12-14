@@ -5,7 +5,7 @@
     mode: "0755"
 
 - name: Execute join
-  shell: kubeadm join --config ~/join_kubeadm_cp.yaml --v=0 --control-plane=false --skip-phases=addon/kube-proxy,certs
+  shell: kubeadm join --config ~/join_kubeadm_cp.yaml --v=0
   ignore_errors: true
 
 - name: k9s
@@ -30,23 +30,23 @@
     remote_src: true
   ignore_errors: true
 
-- name: file {{ USER }}
-  ansible.builtin.file:
-    path: "/home/{{ USER }}/.kube"
-    state: directory
-    owner: "{{ USER }}"
-    group: "{{ USER }}"
-    recurse: true
+# - name: file {{ USER }}
+#   ansible.builtin.file:
+#     path: "/home/{{ USER }}/.kube"
+#     state: directory
+#     owner: "{{ USER }}"
+#     group: "{{ USER }}"
+#     recurse: true
 
-- name: copy {{ USER }}
-  ansible.builtin.copy:
-    src: /etc/kubernetes/admin.conf
-    dest: "/home/{{ USER }}/.kube/config"
-    owner: "{{ USER }}"
-    group: "{{ USER }}"
-    mode: "0600"
-    remote_src: true
-  ignore_errors: true
+# - name: copy {{ USER }}
+#   ansible.builtin.copy:
+#     src: /etc/kubernetes/admin.conf
+#     dest: "/home/{{ USER }}/.kube/config"
+#     owner: "{{ USER }}"
+#     group: "{{ USER }}"
+#     mode: "0600"
+#     remote_src: true
+#   ignore_errors: true
 
 - name: blockinfile .bashrc
   ansible.builtin.blockinfile:
