@@ -19,11 +19,11 @@ variables:
     worker:
       tasks:
         - wk/join.yml
-        # - wk/setup-disk.yml
+        - wk/setup-disk.yml
     cp_after:
       tasks:
-        # - cp/label-node.yml
-        # - cp/role.yml
+        - cp/label-node.yml
+        - cp/role.yml
         - cp/cilium.yml
         # - cp/argocd.yml
         # - cp/postgres-operator.yml
