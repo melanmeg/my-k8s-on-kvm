@@ -1,0 +1,35 @@
+- name: shell install krew
+  ansible.builtin.shell: |
+    (
+      set -x; cd "$(mktemp -d)" &&
+      OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+      ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+      KREW="krew-${OS}_${ARCH}" &&
+      curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+      tar zxvf "${KREW}.tar.gz" &&
+      ./"${KREW}" install krew
+    )
+
+- name: shell
+  ansible.builtin.shell: echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> ~/.bashrc
+
+- name: copy
+  ansible.builtin.copy:
+    src: ./files/wk/seccomp.json
+    dest: /tmp/seccomp.json
+    mode: "0755"
+
+# ref: https://github.com/minio/directpv/blob/master/docs/installation.md
+# ref: https://github.com/minio/directpv/blob/master/seccomp.json
+- name: shell install directpv
+  ansible.builtin.shell: kubectl directpv install --seccomp-profile /tmp/seccomp.json # --apparmor-profile apparmor.profile
+
+# 3回実行する（2,3回実行が必要）
+- name: shell install directpv
+  ansible.builtin.shell: |
+    kubectl directpv discover --output-file /tmp/drives.yaml
+    kubectl directpv init /tmp/drives.yaml --dangerous
+    loop: "{{ range(1, 4) | list }}"
+    loop_control:
+      label: "Loop {{ item }}"
+  ignore_errors: true
