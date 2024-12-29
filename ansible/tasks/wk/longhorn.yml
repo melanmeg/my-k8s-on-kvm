@@ -1,0 +1,18 @@
+- name: shell
+  ansible.builtin.shell: |
+    echo "dm_crypt" | sudo tee -a /etc/modules-load.d/longhorn.conf
+    sudo modprobe dm_crypt
+
+- name: service
+  ansible.builtin.service:
+    name: multipathd.socket
+    state: stopped
+    enabled: false
+  ignore_errors: true
+
+- name: service
+  ansible.builtin.service:
+    name: multipathd
+    state: stopped
+    enabled: false
+  ignore_errors: true

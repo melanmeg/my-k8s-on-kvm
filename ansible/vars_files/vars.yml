@@ -20,6 +20,7 @@ variables:
       tasks:
         - wk/join.yml
         - wk/setup-disk.yml
+        - wk/longhorn.yml
     cp_after:
       tasks:
         - cp/label-node.yml

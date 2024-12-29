@@ -1,8 +1,11 @@
-- name: shell
-  ansible.builtin.shell: kubectl label node {{ VM_HOSTNAME_WK_1 }} node-role.kubernetes.io/worker=
+- name: shell worker label
+  ansible.builtin.shell: |
+    kubectl label node {{ VM_HOSTNAME_WK_1 }} node-role.kubernetes.io/worker=
+    kubectl label node {{ VM_HOSTNAME_WK_2 }} node-role.kubernetes.io/worker=
+    kubectl label node {{ VM_HOSTNAME_WK_3 }} node-role.kubernetes.io/worker=
 
-- name: shell
-  ansible.builtin.shell: kubectl label node {{ VM_HOSTNAME_WK_2 }} node-role.kubernetes.io/worker=
-
-- name: shell
-  ansible.builtin.shell: kubectl label node {{ VM_HOSTNAME_WK_3 }} node-role.kubernetes.io/worker=
+- name: shell longhorn label
+  ansible.builtin.shell: |
+    kubectl label nodes {{ VM_HOSTNAME_WK_1 }} node.longhorn.io/create-default-disk=true
+    kubectl label nodes {{ VM_HOSTNAME_WK_2 }} node.longhorn.io/create-default-disk=true
+    kubectl label nodes {{ VM_HOSTNAME_WK_3 }} node.longhorn.io/create-default-disk=true
