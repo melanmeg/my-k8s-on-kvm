@@ -25,7 +25,7 @@
   ansible.builtin.shell: kubectl directpv install --seccomp-profile /tmp/seccomp.json # --apparmor-profile apparmor.profile
 
 # 3回実行する（2,3回実行が必要）
-- name: shell install directpv
+- name: shell directpv init
   ansible.builtin.shell: |
     kubectl directpv discover --output-file /tmp/drives.yaml
     kubectl directpv init /tmp/drives.yaml --dangerous
