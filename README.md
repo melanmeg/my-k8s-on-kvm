@@ -1,7 +1,3 @@
-# my-k8s-ansible
-
-（自分用）k8s 構築用 Ansible
-
 ## prepare
 
 - 初めに一回実施
