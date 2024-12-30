@@ -7,8 +7,8 @@
     - ./vars_files/vars.yml
   tasks:
     - include_tasks: "./tasks/{{ item }}"
-      with_items: "{{ variables.all.tasks }}"
-      when: variables.all.tasks
+      with_items: "{{ variables.all }}"
+      when: variables.all
 
 - name: lb
   hosts: lb
@@ -19,8 +19,8 @@
     - ./vars_files/vars.yml
   tasks:
     - include_tasks: "./tasks/{{ item }}"
-      with_items: "{{ variables.lb.tasks }}"
-      when: variables.lb.tasks
+      with_items: "{{ variables.lb }}"
+      when: variables.lb
 
 - name: all-node
   hosts: all_node
@@ -31,8 +31,8 @@
     - ./vars_files/vars.yml
   tasks:
     - include_tasks: "./tasks/{{ item }}"
-      with_items: "{{ variables.k8s.all_node.tasks }}"
-      when: variables.k8s.all_node.tasks
+      with_items: "{{ variables.k8s.all_node }}"
+      when: variables.k8s.all_node
 
 - name: cp
   hosts: cp
@@ -43,8 +43,8 @@
     - ./vars_files/vars.yml
   tasks:
     - include_tasks: "./tasks/{{ item }}"
-      with_items: "{{ variables.k8s.cp.tasks }}"
-      when: variables.k8s.cp.tasks
+      with_items: "{{ variables.k8s.cp }}"
+      when: variables.k8s.cp
 
 - name: cp-join
   hosts: cp_join
@@ -55,8 +55,8 @@
     - ./vars_files/vars.yml
   tasks:
     - include_tasks: "./tasks/{{ item }}"
-      with_items: "{{ variables.k8s.cp_join.tasks }}"
-      when: variables.k8s.cp_join.tasks
+      with_items: "{{ variables.k8s.cp_join }}"
+      when: variables.k8s.cp_join
 
 - name: worker
   hosts: worker
@@ -67,8 +67,8 @@
     - ./vars_files/vars.yml
   tasks:
     - include_tasks: "./tasks/{{ item }}"
-      with_items: "{{ variables.k8s.worker.tasks }}"
-      when: variables.k8s.worker.tasks
+      with_items: "{{ variables.k8s.worker }}"
+      when: variables.k8s.worker
 
 - name: cp-after
   hosts: cp
@@ -79,5 +79,5 @@
     - ./vars_files/vars.yml
   tasks:
     - include_tasks: "./tasks/{{ item }}"
-      with_items: "{{ variables.k8s.cp_after.tasks }}"
-      when: variables.k8s.cp_after.tasks
+      with_items: "{{ variables.k8s.cp_after }}"
+      when: variables.k8s.cp_after

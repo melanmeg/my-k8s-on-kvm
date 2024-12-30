@@ -1,32 +1,64 @@
 - name: copy
   ansible.builtin.copy:
-    src: ./files/cp/directpv.sh
-    dest: /tmp/directpv.sh
-    mode: "0755"
-
-- name: copy
-  ansible.builtin.copy:
     src: ./files/cp/seccomp.json
     dest: /tmp/seccomp.json
     mode: "0755"
+
+- name: shell install krew
+  ansible.builtin.shell: |
+    (
+      set -x; cd "$(mktemp -d)" &&
+      OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+      ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+      KREW="krew-${OS}_${ARCH}" &&
+      curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+      tar zxvf "${KREW}.tar.gz" &&
+      ./"${KREW}" install krew
+    )
+  args:
+    executable: /bin/bash
 
 - name: lineinfile ~/.bashrc
   ansible.builtin.lineinfile:
     path: ~/.bashrc
     line: 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"'
 
-# 3回実行する（一発で上手くいかない場合があるため）
 # ref: https://github.com/minio/directpv/blob/master/docs/installation.md
 # ref: https://github.com/minio/directpv/blob/master/seccomp.json
-- name: shell directpv
-  ansible.builtin.shell: /tmp/directpv.sh
-  environment:
-    PATH: "{{ ansible_env.HOME }}/.krew/bin:{{ ansible_env.PATH }}"
+- name: shell krew install
+  ansible.builtin.shell: PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" kubectl krew install directpv
+  args:
+    executable: /bin/bash
+
+- name: shell directpv install
+  ansible.builtin.shell: PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" kubectl directpv install --seccomp-profile seccomp.json
+  args:
+    executable: /bin/bash
+
+# 3回実行する（一発ですべて検知されない場合があるため）
+- name: shell directpv discover
+  ansible.builtin.shell: PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" kubectl directpv discover --timeout 10s --quiet
   args:
     chdir: /tmp
     executable: /bin/bash
-  register: result
+  loop: "{{ range(3) | list }}"
+  loop_control:
+    loop_var: my_item
   ignore_errors: true
-- name: Show stdout for all iterations
+
+- name: shell directpv init
+  ansible.builtin.shell: PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" kubectl directpv init drives.yaml --dangerous --quiet
+  args:
+    chdir: /tmp
+    executable: /bin/bash
+
+- name: shell directpv info
+  ansible.builtin.shell: PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" kubectl directpv info
+  args:
+    chdir: /tmp
+    executable: /bin/bash
+  register: result4
+  ignore_errors: true
+- name: Show stdout
   debug:
-    msg: "{{ result.stdout_lines }}"
+    msg: "{{ result4.stdout_lines }}"
