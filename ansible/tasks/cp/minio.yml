@@ -1,19 +1,3 @@
-- name: shell install krew
-  ansible.builtin.shell: |
-    (
-      set -x; cd "$(mktemp -d)" &&
-      OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
-      ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
-      KREW="krew-${OS}_${ARCH}" &&
-      curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
-      tar zxvf "${KREW}.tar.gz" &&
-      ./"${KREW}" install krew
-    )
-  environment:
-    PATH: "{{ ansible_env.HOME }}/.krew/bin:{{ ansible_env.PATH }}"
-  args:
-    executable: /bin/bash
-
 - name: copy
   ansible.builtin.copy:
     src: ./files/wk/seccomp.json
@@ -26,32 +10,21 @@
     line: 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"'
 
 # 3回実行する（一発で上手くいかない場合があるため）
-- name: shell install directpv plugin
-  ansible.builtin.shell: |
-    kubectl krew install directpv
-    sleep 5
-  environment:
-    PATH: "{{ ansible_env.HOME }}/.krew/bin:{{ ansible_env.PATH }}"
-  args:
-    executable: /bin/bash
-  loop: "{{ range(1, 4) | list }}"
-  loop_control:
-    loop_var: loop_item
-  ignore_errors: true
-
 # ref: https://github.com/minio/directpv/blob/master/docs/installation.md
 # ref: https://github.com/minio/directpv/blob/master/seccomp.json
-- name: shell directpv install
-  ansible.builtin.shell: kubectl directpv install --seccomp-profile seccomp.json # --apparmor-profile apparmor.profile
-  environment:
-    PATH: "{{ ansible_env.HOME }}/.krew/bin:{{ ansible_env.PATH }}"
-  args:
-    chdir: /tmp
-    executable: /bin/bash
-
-# 3回実行する（たまに2,3回実行が必要ば場合があるため）
-- name: shell directpv init
+- name: shell directpv
   ansible.builtin.shell: |
+    (
+      set -x; cd "$(mktemp -d)" &&
+      OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+      ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+      KREW="krew-${OS}_${ARCH}" &&
+      curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+      tar zxvf "${KREW}.tar.gz" &&
+      ./"${KREW}" install krew
+    )
+    kubectl krew install directpv
+    kubectl directpv install --seccomp-profile seccomp.json # --apparmor-profile apparmor.profile
     kubectl directpv discover --output-file /tmp/drives.yaml --timeout 10s
     kubectl directpv init drives.yaml --dangerous
     sleep 5
@@ -66,13 +39,19 @@
   ignore_errors: true
 
 - name: shell directpv info
-  ansible.builtin.shell: kubectl directpv info
+  ansible.builtin.shell: |
+    sleep 5
+    kubectl directpv info
   environment:
     PATH: "{{ ansible_env.HOME }}/.krew/bin:{{ ansible_env.PATH }}"
   args:
+    chdir: /tmp
     executable: /bin/bash
+  loop: "{{ range(1, 4) | list }}"
+  loop_control:
+    loop_var: loop_item
   register: result
-  changed_when: false
-- name: Show stdout init
+  ignore_errors: true
+- name: Show stdout for all iterations
   debug:
-    msg: "{{ result.stdout_lines }}"
+    msg: "{{ result.results | map(attribute='stdout_lines') | list }}"
