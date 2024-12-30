@@ -44,6 +44,7 @@ $ rm -rf .venv && \
 ```bash
 $ cd ./ansible/files/cp/argocd
 $ sops -e -i argocd-config-values.yaml
+# sops -d -i argocd-config-values.yaml
 ```
 
 ## Usage
