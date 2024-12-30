@@ -35,13 +35,13 @@
   args:
     executable: /bin/bash
 
-# 3回実行する（一発ですべて検知されない場合があるため）
+# 5回実行する（一発ですべて検知されない場合があるため）
 - name: shell directpv discover
-  ansible.builtin.shell: PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" kubectl directpv discover --timeout 10s --quiet
+  ansible.builtin.shell: PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" kubectl directpv discover --timeout 10s --quiet && sleep 5
   args:
     chdir: /tmp
     executable: /bin/bash
-  loop: "{{ range(3) | list }}"
+  loop: "{{ range(5) | list }}"
   loop_control:
     loop_var: my_item
   ignore_errors: true
