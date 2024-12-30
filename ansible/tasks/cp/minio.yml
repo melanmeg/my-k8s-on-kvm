@@ -25,12 +25,19 @@
     path: ~/.bashrc
     line: 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"'
 
+# 3回実行する（一発で上手くいかない場合があるため）
 - name: shell install directpv plugin
-  ansible.builtin.shell: kubectl krew install directpv
+  ansible.builtin.shell: |
+    kubectl krew install directpv
+    sleep 5
   environment:
     PATH: "{{ ansible_env.HOME }}/.krew/bin:{{ ansible_env.PATH }}"
   args:
     executable: /bin/bash
+  loop: "{{ range(1, 4) | list }}"
+  loop_control:
+    loop_var: loop_item
+  ignore_errors: true
 
 # ref: https://github.com/minio/directpv/blob/master/docs/installation.md
 # ref: https://github.com/minio/directpv/blob/master/seccomp.json
