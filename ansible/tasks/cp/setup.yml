@@ -13,7 +13,7 @@
 
 - name: template
   ansible.builtin.template:
-    src: ./files/cp/init_kubeadm.yaml.j2
+    src: ./files/cp/k8s/init_kubeadm.yaml.j2
     dest: /tmp/init_kubeadm.yaml
   environment:
     KUBEADM_BOOTSTRAP_TOKEN: "{{ KUBEADM_BOOTSTRAP_TOKEN }}"
@@ -64,7 +64,7 @@
 
 - name: template
   ansible.builtin.template:
-    src: ./files/cp/join_kubeadm_cp.yaml.j2
+    src: ./files/cp/k8s/join_kubeadm_cp.yaml.j2
     dest: /tmp/join_kubeadm_cp.yaml
   environment:
     KUBEADM_BOOTSTRAP_TOKEN: "{{ KUBEADM_BOOTSTRAP_TOKEN }}"
@@ -73,7 +73,7 @@
 
 - name: template
   ansible.builtin.template:
-    src: ./files/cp/join_kubeadm_wk.yaml.j2
+    src: ./files/cp/k8s/join_kubeadm_wk.yaml.j2
     dest: /tmp/join_kubeadm_wk.yaml
   environment:
     KUBEADM_BOOTSTRAP_TOKEN: "{{ KUBEADM_BOOTSTRAP_TOKEN }}"

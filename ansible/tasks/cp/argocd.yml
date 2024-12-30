@@ -3,12 +3,12 @@
 
 - name: copy
   ansible.builtin.copy:
-    src: ./files/cp/argocd-apps-helm-chart-values.yaml
+    src: ./files/cp/argocd/argocd-apps-helm-chart-values.yaml
     dest: /tmp/argocd-apps-helm-chart-values.yaml
 
 - name: copy
   ansible.builtin.copy:
-    src: ./files/cp/argocd-helm-chart-values.yaml
+    src: ./files/cp/argocd/argocd-helm-chart-values.yaml
     dest: /tmp/argocd-helm-chart-values.yaml
 
 - name: Execute helm
