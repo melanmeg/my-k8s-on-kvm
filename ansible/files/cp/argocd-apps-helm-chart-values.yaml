@@ -5,7 +5,7 @@ applications:
     source:
       repoURL: https://github.com/melanmeg/my-k8s-app
       targetRevision: main
-      path: k8s-manifests/apps/root
+      path: k8s-manifests/root
     destination:
       server: https://kubernetes.default.svc
       namespace: argocd
