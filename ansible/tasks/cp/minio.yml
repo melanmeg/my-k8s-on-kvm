@@ -9,9 +9,10 @@
       tar zxvf "${KREW}.tar.gz" &&
       ./"${KREW}" install krew
     )
-
-- name: shell
-  ansible.builtin.shell: echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> ~/.bashrc
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.krew/bin:{{ ansible_env.PATH }}"
+  args:
+    executable: /bin/bash
 
 - name: copy
   ansible.builtin.copy:
@@ -19,17 +20,52 @@
     dest: /tmp/seccomp.json
     mode: "0755"
 
+- name: lineinfile ~/.bashrc
+  ansible.builtin.lineinfile:
+    path: ~/.bashrc
+    line: 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"'
+
+- name: shell install directpv plugin
+  ansible.builtin.shell: kubectl krew install directpv
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.krew/bin:{{ ansible_env.PATH }}"
+  args:
+    executable: /bin/bash
+
 # ref: https://github.com/minio/directpv/blob/master/docs/installation.md
 # ref: https://github.com/minio/directpv/blob/master/seccomp.json
-- name: shell install directpv
-  ansible.builtin.shell: kubectl directpv install --seccomp-profile /tmp/seccomp.json # --apparmor-profile apparmor.profile
+- name: shell directpv install
+  ansible.builtin.shell: kubectl directpv install --seccomp-profile seccomp.json # --apparmor-profile apparmor.profile
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.krew/bin:{{ ansible_env.PATH }}"
+  args:
+    chdir: /tmp
+    executable: /bin/bash
 
-# 3回実行する（2,3回実行が必要）
+# 3回実行する（たまに2,3回実行が必要ば場合があるため）
 - name: shell directpv init
   ansible.builtin.shell: |
-    kubectl directpv discover --output-file /tmp/drives.yaml
-    kubectl directpv init /tmp/drives.yaml --dangerous
-    loop: "{{ range(1, 4) | list }}"
-    loop_control:
-      label: "Loop {{ item }}"
+    kubectl directpv discover --output-file /tmp/drives.yaml --timeout 10s
+    kubectl directpv init drives.yaml --dangerous
+    sleep 5
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.krew/bin:{{ ansible_env.PATH }}"
+  args:
+    chdir: /tmp
+    executable: /bin/bash
+  loop: "{{ range(1, 4) | list }}"
+  loop_control:
+    loop_var: loop_item
   ignore_errors: true
+
+- name: shell directpv info
+  ansible.builtin.shell: kubectl directpv info
+  environment:
+    PATH: "{{ ansible_env.HOME }}/.krew/bin:{{ ansible_env.PATH }}"
+  args:
+    executable: /bin/bash
+  register: result
+  changed_when: false
+- name: Show stdout init
+  debug:
+    msg: "{{ result.stdout_lines }}"
