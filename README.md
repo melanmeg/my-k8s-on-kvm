@@ -18,6 +18,15 @@ $ sudo apt update -y \
 $ terraform providers lock -platform=linux_amd64
 ```
 
+- 定期的に実施
+
+```bash
+$ cd terraform/modules/common/
+$ wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+```
+
+### LB の修正
+
 ```bash
 # haproxy と keepalived の設定ファイルの Jinja テンプレートを生成する
 $ cd ./ansible/files/lb/config_gen
@@ -30,11 +39,11 @@ $ rm -rf .venv && \
   python keepalived.py
 ```
 
-- 定期的に実施
+### ファイル暗号化
 
 ```bash
-$ cd terraform/modules/common/
-$ wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+$ cd ./ansible/files/cp/argocd
+$ sops -e -i argocd-config-values.yaml
 ```
 
 ## Usage

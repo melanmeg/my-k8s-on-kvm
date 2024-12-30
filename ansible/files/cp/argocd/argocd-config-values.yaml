@@ -1,0 +1,26 @@
+configs:
+    params:
+        #ENC[AES256_GCM,data:+FR96R5j96PdlYIYrjMSpAAq+3a9SCdGbYRYjJow2dvGgT5+NJHDPG8Qg5vrtx/bHpy6O+wYKOOiTuUOV3wn0MZOLA==,iv:1thpeJ4y0FD68hc+F8NToGszmnY5cDzL8aFQ7YAW3Po=,tag:bM5yQUfdhcX2kSmvyBwALQ==,type:comment]
+        server.insecure: ENC[AES256_GCM,data:UERpYA==,iv:eskb/JUu7FPfQzKW47UMEJcstXCjTEC4JQmHjgA4X44=,tag:DLVrHI3bVdzEweBidjENxw==,type:bool]
+    cm:
+        #ENC[AES256_GCM,data:G8uVYSigfU2Z56n/2xB0NIOaN22C4n6iF6ogYnFWt60f4XJFtecNTe/TXEGhtDS8OdZd1dKaiHLg,iv:loBN/DNYpUW7oL9j2jKiNImE6wA4/kiy0ZfqMSIw1II=,tag:LKi0uuHZA2Y8sKVE8B/vrg==,type:comment]
+        admin.enabled: ENC[AES256_GCM,data:4Gy4Ki0=,iv:uatd3MOiJ95hwdr6zBwlzid/0rs5eJgvLd46vHmBxeI=,tag:N7qpxSRWHWBZVj37RiC4Vg==,type:bool]
+        dex.config: ENC[AES256_GCM,data:RxQ7UlchZqRGfZ9vUleqbScIrWYUlJXlAapvWM0g//UOsCYdNgum1WHcsQ8lWtX0fuoNzPGKE9E1RgcYi2ahWgELtvoUTXAvofW33mpxfzx48ZSvh6jSvMP75lhaqSop1eu5tYwuu7m2ONeAcyEfcdHdkKlH08YSCAnBUrGr2abRgmW/Tj41UGVrZcL3Hv4I1pWJThpEbyU/xprvgKH6EmZWGKsDj9XtrH0A/JNPYiOesAFM6XRcEPsLGF4CiDljud+xbLrKMG7wjQ==,iv:aOx4URPDAWy+DYewBvS39RLBYoSm2nEULea3pa19gi4=,tag:9FfWEp0wFEfiJP4emjSw5Q==,type:str]
+    rbac:
+        policy.default: ""
+        scopes: ENC[AES256_GCM,data:G+mLlxNI2j95DXhi8I8l,iv:637Q8svh7eHHKtb3z2rJCK7w/Tx8HnQXmCJJ40YnRsM=,tag:qV5JYHPdJYAZJkOg5yPhjg==,type:str]
+        policy.csv: ENC[AES256_GCM,data:CVHHIxd+Ke5YpjIa/zPk7P30LXo/FS8Q0XzeGVMojvFtCT6mWzJ5Dw==,iv:KNB2jg/JNjMlQ+0T/7W6/CwD4y1oXL2Oe9tUoqoM2Zw=,tag:lUjDyKrYA8UtmxTAfD6KDw==,type:str]
+sops:
+    kms: []
+    gcp_kms:
+        - resource_id: projects/my-project-melanmeg/locations/global/keyRings/sops/cryptoKeys/sops-key
+          created_at: "2024-12-30T17:10:59Z"
+          enc: CiQArI2s6mJG1tSeRaqCVAht/7ey5gasmFIH5G399uTyZnge7g8SSQCB2VQr/M5c/PNqMNT2Ad/+HYrTpP7IWea/Dqd3XISdrgg7XrNlin1VNdRfSpJglILxFYwXfdCTEC2A5Wwb5kRCnGJ6p6PapzQ=
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2024-12-30T17:10:59Z"
+    mac: ENC[AES256_GCM,data:I9CO1WxqDSqg5KEjZj8rNwzK65VNTC/LwKIUI7M1KxX8gvxzusSVQBVMjcwFE96eshsiPyli6iXreNb/4XSR7udbwYg59AdopKtBcpBbAbTJOxIlZFjctcTBiT+PYJ8VLVCyzgbfBrJIz7WRtcf2G4Vgf58EAqOxPxBNSC9bfiY=,iv:wAxehR3HEmPlUswEvwZ86iwcaGS4kkOClzb8R8MXxMA=,tag:JWGDzdleV0Mnf035zcuHPw==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.9.1
