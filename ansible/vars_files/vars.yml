@@ -1,23 +1,23 @@
 variables:
   all:
-    # - common/sysctl.yml
+    - common/sysctl.yml
   lb:
-    # - lb/ha.yml
+    - lb/ha.yml
   k8s:
     all_node:
-      # - common/nfs-client.yml
-      # - common/k8s.yml
+      - common/nfs-client.yml
+      - common/k8s.yml
     cp:
-      # - cp/setup.yml
+      - cp/setup.yml
     cp_join:
       # - cp/join.yml
     worker:
-      # - wk/join.yml
-      # - wk/setup-disk.yml
-      # - wk/longhorn.yml
+      - wk/join.yml
+      - wk/setup-disk.yml
+      - wk/longhorn.yml
     cp_after:
-      # - cp/label-node.yml
-      # - cp/role.yml
-      # - cp/cilium.yml
-      # - cp/argocd.yml
+      - cp/label-node.yml
+      - cp/role.yml
+      - cp/cilium.yml
+      - cp/argocd.yml
       - cp/minio.yml
