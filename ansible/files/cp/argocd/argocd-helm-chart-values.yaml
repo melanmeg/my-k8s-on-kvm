@@ -96,32 +96,23 @@ notifications:
       cpu: 100m
       memory: 64Mi
 
+global:
+  domain: argocd.melanmeg.com
+
 configs:
-  # params:
-  #   server.insecure: true  # httpからhttpsにリダイレクトするのを許可するため
+  params:
+    server.insecure: true
   cm:
     # Disable userid/password login and remove from login page
     admin.enabled: false
-    # dex.config: |
-    #   connectors:
-    #     - type: github
-    #       id: github
-    #       name: github
-    #       config:
-    #         clientID: xxxxx
-    #         clientSecret: xxxxx
-    #         orgs:
-    #           - argoproj
+    dex.config: |
+      connectors:
+        - type: github
+          id: github
+          name: github
+          config:
+
   rbac:
-    policy.default: ""
-    scopes: "[email, groups]"
-  #   policy.csv: |
-  #     p, hoge@example.com, applications, *, */*, allow
-  #     p, role:org-admin, applications, *, */*, allow
-  #     p, role:org-admin, clusters, get, *, allow
-  #     p, role:org-admin, repositories, *, *, allow
-  #     p, role:org-admin, logs, get, *, allow
-  #     p, role:org-admin, exec, create, */*, allow
-  #     g, your-github-org:your-team, role:org-admin
-  #     g, your-github-org:your-team, role:admin
-  #     g, user01@mycompany.com, role:admin  # 個人アカウントの場合、これがよい
+    policy.default: "role:admin"
+    # policy.csv: |
+    #   g, naoya@05280708@gmail.com, role:admin

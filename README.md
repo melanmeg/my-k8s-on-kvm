@@ -29,8 +29,8 @@ $ wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64
 
 ```bash
 # haproxy と keepalived の設定ファイルの Jinja テンプレートを生成する
-$ cd ./ansible/files/lb/config_gen
-$ rm -rf .venv && \
+$ cd ./ansible/files/lb/config_gen && \
+  rm -rf .venv && \
   python -m venv .venv && \
   source .venv/bin/activate && \
   pip install --upgrade pip && \
