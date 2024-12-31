@@ -111,8 +111,10 @@ configs:
           id: github
           name: github
           config:
-
+            clientID: Ov23liMJpaJYp6m4ABrL
+            clientSecret: $dex.github.clientSecret
   rbac:
-    policy.default: "role:admin"
-    # policy.csv: |
-    #   g, naoya@05280708@gmail.com, role:admin
+    policy.default: ""
+    scopes: "[openid, profile, email, groups]"
+    policy.csv: |
+      g, naoya05280708@gmail.com, role:admin
