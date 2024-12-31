@@ -16,11 +16,6 @@
 
 - name: copy
   ansible.builtin.copy:
-    src: ./files/cp/argocd/argocd-config-values.yaml
-    dest: /tmp/argocd-config-values.yaml
-
-- name: copy
-  ansible.builtin.copy:
     src: ./files/cp/argocd/argocd-apps-helm-chart-values.yaml
     dest: /tmp/argocd-apps-helm-chart-values.yaml
 
