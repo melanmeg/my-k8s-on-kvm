@@ -3,21 +3,27 @@
 
 - name: copy
   ansible.builtin.copy:
-    src: ./files/cp/argocd/argocd-apps-helm-chart-values.yaml
-    dest: /tmp/argocd-apps-helm-chart-values.yaml
-
-- name: copy
-  ansible.builtin.copy:
     src: ./files/cp/argocd/argocd-helm-chart-values.yaml
     dest: /tmp/argocd-helm-chart-values.yaml
 
+- name: copy
+  ansible.builtin.copy:
+    src: ./files/cp/argocd/argocd-config-values.yaml
+    dest: /tmp/argocd-config-values.yaml
+
+- name: copy
+  ansible.builtin.copy:
+    src: ./files/cp/argocd/argocd-apps-helm-chart-values.yaml
+    dest: /tmp/argocd-apps-helm-chart-values.yaml
+
 - name: Execute helm
   ansible.builtin.shell: |
-    helm install argocd argo/argo-cd \
-        --version 7.6.12 \
-        --create-namespace \
-        --namespace argocd \
-        --values /tmp/argocd-helm-chart-values.yaml
+    helm secrets install argocd argo/argo-cd \
+      --version 7.6.12 \
+      --create-namespace \
+      --namespace argocd \
+      --values /tmp/argocd-helm-chart-values.yaml
+      --values /tmp/argocd-config-values.yaml
   ignore_errors: true
 
 - name: Execute helm
