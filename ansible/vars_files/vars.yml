@@ -20,4 +20,5 @@ variables:
       - cp/role.yml
       - cp/cilium.yml
       - cp/argocd.yml
+      - cp/1password.yml
       - cp/minio.yml
