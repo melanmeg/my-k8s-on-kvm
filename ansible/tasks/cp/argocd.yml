@@ -13,7 +13,9 @@
     dest: /tmp/argocd-apps-helm-chart-values.yaml
 
 - name: shell kubectl apply -k cluster-install
+  become: false
   ansible.builtin.shell: |
+    kubectl create namespace argocd
     kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v2.13.0"
 
 # - name: shell helm argo/argo-cd
