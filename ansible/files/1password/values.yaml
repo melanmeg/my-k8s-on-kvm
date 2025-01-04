@@ -1,0 +1,96 @@
+connect:
+  # Denotes whether the 1Password Connect server will be deployed
+  create: true
+
+  # The number of replicas to run the 1Password Connect deployment
+  replicas: 1
+
+  # The 1Password Connect API Specific Values
+  api:
+    name: connect-api
+    # The 1Password Connect API repository
+    imageRepository: 1password/connect-api
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 0.2
+    httpPort: 8080
+    httpsPort: 8443
+    logLevel: info
+    # Prometheus Service Monitor
+    # ref: https://github.com/coreos/prometheus-operator
+    #
+    serviceMonitor:
+      # Create ServiceMonitor Resource for scraping metrics using PrometheusOperator
+      #
+      enabled: false
+      # Specify the interval at which metrics should be scraped
+      #
+      interval: 30s
+      # Define the path used by ServiceMonitor to scrape metrics
+      #
+      path: "/metrics"
+      # Define the HTTP URL parameters used by ServiceMonitor
+      #
+      params: {}
+      # Extra annotations for the ServiceMonitor
+      #
+      annotations: {}
+
+  # The 1Password Connect Sync Specific Values
+  sync:
+    name: connect-sync
+    imageRepository: 1password/connect-sync
+    resources: {}
+    httpPort: 8081
+    logLevel: info
+
+  # The name of 1Password Connect Application
+  applicationName: onepassword-connect
+
+  # The name of 1Password Connect Host
+  host: onepassword-connect
+
+  # The type of Service resource to create for the Connect API and sync services.
+  # See: https://kubernetes.io/docs/concepts/services-networking/service
+  # This by default is NodePort and can also be defined as LoadBalancer.
+  # If serviceType is LoadBalancer then loadBalancerSourceRanges and loadBalancerIP should be defined.
+  # See: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
+  serviceType: NodePort
+
+  # Determines if HTTPS Port if setup for the 1Password Connect
+  # Services for 1Password Connect API and Sync
+  tls:
+    # Denotes whether the Connect API is secured with TLS
+    enabled: false
+    # The name of the secret containing the TLS key (tls.key) and certificate (tls.crt)
+    secret: op-connect-tls
+
+  # Optionally the internal profiler can be enabled to debug memory or performance issues.
+  # For normal operation of Connect this does not have to enabled.
+  profiler:
+    enabled: false
+    # The interval at which profiler snapshots are taken.
+    interval: 6h
+    # Number of profiler snapshots to keep.
+    keepLast: 12
+
+operator:
+  # Denotes whether the 1Password Operator will be deployed
+  create: true
+
+  # The number of replicas to run the 1Password Connect Operator deployment
+  replicas: 1
+
+  # Denotes whether the 1Password Operator will automatically restart deployments based on associated updated secrets.
+  autoRestart: false
+
+  # The name of 1Password Operator Application
+  applicationName: onepassword-connect-operator
+
+  # How often the 1Password Operator will poll for secrets updates.
+  pollingInterval: 600
+
+  # 1Password Operator Log Level Configuration
+  logLevel: info
