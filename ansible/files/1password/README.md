@@ -36,11 +36,3 @@ EOF
 
 $ kubectl get secret -n onepassword -o yaml
 ```
-
-- external-secrets
-
-```bash
-$ kubectl apply -f onepassword-connect-token.yaml
-$ kubectl apply -f secret-store.yaml
-$ kubectl apply -f external-secrets.yaml
-```
