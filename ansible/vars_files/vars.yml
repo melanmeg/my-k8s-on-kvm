@@ -16,6 +16,7 @@ variables:
       - wk/setup-disk.yml
       - wk/longhorn.yml
     cp_after:
+      - cp/tools.yml
       - cp/label-node.yml
       - cp/role.yml
       - cp/cilium.yml

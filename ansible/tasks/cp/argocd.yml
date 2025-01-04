@@ -2,13 +2,6 @@
   ansible.builtin.shell: |
     helm repo add argo https://argoproj.github.io/argo-helm
 
-# - name: shell helm secrets and sops
-#   become: true
-#   ansible.builtin.shell: |
-#     helm plugin install https://github.com/jkroepke/helm-secrets
-#     curl -L https://github.com/getsops/sops/releases/download/v3.9.2/sops-v3.9.2.linux.amd64 -o /usr/local/bin/sops
-#     chmod +x /usr/local/bin/sops
-
 - name: copy
   ansible.builtin.copy:
     src: ./files/cp/argocd/argocd-helm-chart-values.yaml
