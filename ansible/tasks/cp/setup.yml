@@ -1,3 +1,11 @@
+- name: k9s
+  ansible.builtin.shell: |
+    aria2c -d /tmp -x 16 -s 16 -k 1M -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v0.32.5/k9s_Linux_amd64.tar.gz
+    tar -xvf /tmp/k9s.tar.gz -C /tmp
+    cp -a /tmp/k9s /usr/local/bin/k9s
+    chown root:root /usr/local/bin/k9s
+    chmod +x /usr/local/bin/k9s
+
 - name: Generate and set_fact KUBEADM_BOOTSTRAP_TOKEN
   ansible.builtin.set_fact:
     KUBEADM_BOOTSTRAP_TOKEN: "{{ lookup('pipe', 'echo $(openssl rand -hex 3).$(openssl rand -hex 8)') }}"

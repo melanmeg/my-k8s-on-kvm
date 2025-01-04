@@ -1,17 +1,15 @@
-- name: k9s
-  ansible.builtin.shell: |
-    aria2c -d /tmp -x 16 -s 16 -k 1M -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v0.32.5/k9s_Linux_amd64.tar.gz
-    tar -xvf /tmp/k9s.tar.gz -C /tmp
-    cp -a /tmp/k9s /usr/local/bin/k9s
-    chown root:root /usr/local/bin/k9s
-    chmod +x /usr/local/bin/k9s
-
 - name: shell helm
   ansible.builtin.shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
-# ------------------------------------------------------------
+- name: shell kustomize
+  become: true
+  ansible.builtin.shell: |
+    curl -o /tmp/kustomize -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+    cp -a kustomize /usr/local/bin/kustomize
+    chown root:root /usr/local/bin/k9s
+    chmod +x /usr/local/bin/kustomize
 
-# - name: shell helm secrets sops
+# - name: shell helm secrets
 #   become: true
 #   ansible.builtin.shell: |
 #     helm plugin install https://github.com/jkroepke/helm-secrets
@@ -21,11 +19,3 @@
 #   ansible.builtin.shell: |
 #     curl -L https://github.com/getsops/sops/releases/download/v3.9.2/sops-v3.9.2.linux.amd64 -o /usr/local/bin/sops
 #     chmod +x /usr/local/bin/sops
-
-- name: shell kustomize
-  become: true
-  ansible.builtin.shell: |
-    curl -o /tmp/kustomize -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-    cp -a kustomize /usr/local/bin/kustomize
-    chown root:root /usr/local/bin/k9s
-    chmod +x /usr/local/bin/kustomize
