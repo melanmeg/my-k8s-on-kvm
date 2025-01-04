@@ -40,7 +40,7 @@
   ansible.builtin.shell: |
     PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
     kubectl directpv discover --timeout 10s --quiet
-    sleep 5
+    sleep 8
   args:
     chdir: /tmp
     executable: /bin/bash
