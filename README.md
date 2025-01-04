@@ -1,6 +1,6 @@
 ## prepare
 
-- 初めに一回実施
+### 初めに一回実施
 
 ```bash
 # Terraform 対象サーバーで実行
@@ -10,15 +10,11 @@ $ sudo systemctl restart libvirtd
 # Terraform 実行サーバーで実行
 $ sudo apt update -y \
   sudo apt install -y mkisofs
-```
 
-- 初めに一回実施
-
-```bash
 $ terraform providers lock -platform=linux_amd64
 ```
 
-- 定期的に実施
+### 定期的に実施
 
 ```bash
 $ cd terraform/modules/common/
@@ -39,12 +35,12 @@ $ cd ./ansible/files/lb/config_gen && \
   python keepalived.py
 ```
 
-### ファイル暗号化
+### 1password
 
 ```bash
-$ cd ./ansible/files/cp/argocd
-$ sops -e -i argocd-config-values.yaml
-# sops -d -i argocd-config-values.yaml
+# 以下２ファイルを設置
+./ansible/files/1password/1password-credentials.json
+./ansible/files/1password/connect_api_token.txt
 ```
 
 ## Usage

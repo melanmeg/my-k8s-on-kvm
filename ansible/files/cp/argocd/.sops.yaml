@@ -1,2 +1,0 @@
-creation_rules:
-  - gcp_kms: projects/my-project-melanmeg/locations/global/keyRings/sops/cryptoKeys/sops-key
