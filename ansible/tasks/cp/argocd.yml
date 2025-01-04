@@ -12,16 +12,20 @@
     src: ./files/cp/argocd/argocd-apps-helm-chart-values.yaml
     dest: /tmp/argocd-apps-helm-chart-values.yaml
 
-- name: Execute helm
+- name: shell kubectl apply -k cluster-install
   ansible.builtin.shell: |
-    helm install argocd argo/argo-cd \
-      --version 7.6.12 \
-      --create-namespace \
-      --namespace argocd \
-      --values /tmp/argocd-helm-chart-values.yaml
-  ignore_errors: true
+    kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v2.13.0"
 
-- name: Execute helm
+# - name: shell helm argo/argo-cd
+#   ansible.builtin.shell: |
+#     helm install argocd argo/argo-cd \
+#       --version 7.6.12 \
+#       --create-namespace \
+#       --namespace argocd \
+#       --values /tmp/argocd-helm-chart-values.yaml
+#   ignore_errors: true
+
+- name: shell helm argo/argocd-apps
   ansible.builtin.shell: |
     helm install argocd argo/argocd-apps \
       --version 2.0.2 \

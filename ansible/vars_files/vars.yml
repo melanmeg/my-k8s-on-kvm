@@ -22,4 +22,4 @@ variables:
       - cp/cilium.yml
       - cp/argocd.yml
       - cp/1password.yml
-      - cp/minio.yml
+      # - cp/minio.yml
