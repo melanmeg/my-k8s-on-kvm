@@ -2,11 +2,6 @@
   ansible.builtin.shell: |
     helm repo add argo https://argoproj.github.io/argo-helm
 
-# - name: copy
-#   ansible.builtin.copy:
-#     src: ./files/cp/argocd/argocd-helm-chart-values.yaml
-#     dest: /tmp/argocd-helm-chart-values.yaml
-
 - name: file
   ansible.builtin.file:
     path: /tmp/argocd
@@ -27,15 +22,6 @@
   ansible.builtin.shell: |
     kubectl create namespace argocd
     kubectl apply -k /tmp/argocd/
-
-# - name: shell helm argo/argo-cd
-#   ansible.builtin.shell: |
-#     helm install argocd argo/argo-cd \
-#       --version 7.6.12 \
-#       --create-namespace \
-#       --namespace argocd \
-#       --values /tmp/argocd-helm-chart-values.yaml
-#   ignore_errors: true
 
 - name: shell helm argo/argocd-apps
   ansible.builtin.shell: |
