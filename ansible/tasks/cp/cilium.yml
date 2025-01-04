@@ -1,7 +1,7 @@
 - name: shell
   ansible.builtin.shell: helm repo add cilium https://helm.cilium.io/
 
-- name: Execute helm
+- name: shell helm
   ansible.builtin.shell: |
     helm install cilium cilium/cilium \
         --version 1.16.1 \

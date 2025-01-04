@@ -19,7 +19,7 @@
     KUBEADM_BOOTSTRAP_TOKEN: "{{ KUBEADM_BOOTSTRAP_TOKEN }}"
   ignore_errors: true
 
-- name: Execute kubeadm init
+- name: shell kubeadm init
   ansible.builtin.shell: kubeadm init --config /tmp/init_kubeadm.yaml --v=0 --skip-phases=addon/kube-proxy
 
 - name: file

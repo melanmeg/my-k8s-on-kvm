@@ -4,7 +4,7 @@
     dest: ~/join_kubeadm_cp.yaml
     mode: "0755"
 
-- name: Execute join
+- name: shell join
   shell: kubeadm join --config ~/join_kubeadm_cp.yaml --v=0
   ignore_errors: true
 
