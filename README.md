@@ -56,3 +56,7 @@ $ terraform -chdir=./terraform/env destroy -auto-approve -input=false
 # nfsを使っている場合、base2で実行する
 $ sudo rm -rf /mnt/nfsshare/k8s/share/*
 ```
+
+```bash
+$ kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+```

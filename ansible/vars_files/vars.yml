@@ -13,13 +13,13 @@ variables:
       # - cp/join.yml
     worker:
       - wk/join.yml
-      - wk/setup-disk.yml
-      - wk/longhorn.yml
+      # - wk/setup-disk.yml
+      # - wk/longhorn.yml
     cp_after:
       - cp/tools.yml
-      - cp/label-node.yml
-      - cp/role.yml
+      # - cp/label-node.yml
+      # - cp/role.yml
       - cp/cilium.yml
-      - cp/argocd.yml
-      - cp/1password.yml
+      # - cp/argocd.yml
+      # - cp/1password.yml
       # - cp/minio.yml

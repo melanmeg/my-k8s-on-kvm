@@ -93,11 +93,25 @@ notifications:
       cpu: 100m
       memory: 64Mi
 
+global:
+  domain: argocd.melanmeg.com
+
 configs:
   params:
     server.insecure: true
-  secret:
-    argocdServerAdminPassword: "$2a$10$4IZX0huwNB4QNz4Yxr3LYuDfrtCwqkImzbftUFufj5ftQfcJ6zWuq"
-    # user    : admin
-    # password: admin
-    # htpasswd -nbBC 10 "" admin | tr -d ':\n' | sed 's/$2y/$2a/'
+  cm:
+    # Disable userid/password login and remove from login page
+    admin.enabled: false
+    dex.config: |
+      connectors:
+        - type: github
+          id: github
+          name: github
+          config:
+            clientID: Ov23liMJpaJYp6m4ABrL
+            clientSecret: $dex.github.clientSecret
+  rbac:
+    policy.default: ""
+    scopes: "[openid, profile, email, groups]"
+    policy.csv: |
+      g, naoya05280708@gmail.com, role:admin
