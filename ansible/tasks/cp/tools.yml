@@ -1,11 +1,10 @@
 - name: shell helm
   ansible.builtin.shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-
-- name: shell kustomize
-  become: true
-  ansible.builtin.shell: |
-    curl -o /tmp/kustomize -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-    chmod +x /tmp/kustomize
+# - name: shell kustomize
+#   become: true
+#   ansible.builtin.shell: |
+#     curl -o /tmp/kustomize -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+#     chmod +x /tmp/kustomize
 
 # - name: shell helm secrets
 #   become: true
