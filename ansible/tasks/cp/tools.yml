@@ -6,8 +6,6 @@
   ansible.builtin.shell: |
     curl -o /tmp/kustomize -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
     chmod +x /tmp/kustomize
-    ./tmp/kustomize
-    mv kustomize /usr/local/bin/kustomize
 
 # - name: shell helm secrets
 #   become: true

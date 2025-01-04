@@ -9,7 +9,6 @@
 - name: Generate and set_fact KUBEADM_BOOTSTRAP_TOKEN
   ansible.builtin.set_fact:
     KUBEADM_BOOTSTRAP_TOKEN: "{{ lookup('pipe', 'echo $(openssl rand -hex 3).$(openssl rand -hex 8)') }}"
-  ignore_errors: true
 
 - name: template
   ansible.builtin.template:
@@ -17,7 +16,6 @@
     dest: /tmp/init_kubeadm.yaml
   environment:
     KUBEADM_BOOTSTRAP_TOKEN: "{{ KUBEADM_BOOTSTRAP_TOKEN }}"
-  ignore_errors: true
 
 - name: shell kubeadm init
   ansible.builtin.shell: kubeadm init --config /tmp/init_kubeadm.yaml --v=0 --skip-phases=addon/kube-proxy

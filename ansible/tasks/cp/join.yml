@@ -28,7 +28,6 @@
     dest: "~/.kube/config"
     mode: "0600"
     remote_src: true
-  ignore_errors: true
 
 - name: file {{ USER }}
   ansible.builtin.file:
@@ -46,7 +45,6 @@
     group: "{{ USER }}"
     mode: "0600"
     remote_src: true
-  ignore_errors: true
 
 - name: blockinfile .bashrc
   ansible.builtin.blockinfile:

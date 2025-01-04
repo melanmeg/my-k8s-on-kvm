@@ -6,4 +6,3 @@
 
 - name: shell
   shell: kubectl apply -f /tmp/role.yaml
-  ignore_errors: true

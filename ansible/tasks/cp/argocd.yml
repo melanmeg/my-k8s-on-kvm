@@ -42,4 +42,3 @@
     helm install argocd argo/argocd-apps \
       --version 2.0.2 \
       --values /tmp/argocd-apps-helm-chart-values.yaml
-  ignore_errors: true
