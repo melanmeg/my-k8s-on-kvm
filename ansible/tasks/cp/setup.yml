@@ -32,7 +32,6 @@
     dest: "~/.kube/config"
     mode: "0600"
     remote_src: true
-  ignore_errors: true
 
 - name: file {{ USER }}
   ansible.builtin.file:
@@ -50,7 +49,6 @@
     group: "{{ USER }}"
     mode: "0600"
     remote_src: true
-  ignore_errors: true
 
 - name: shell Generate KUBEADM_UPLOADED_CERTS
   ansible.builtin.shell: kubeadm init phase upload-certs --upload-certs 2>&1 | tail -n 1
@@ -67,7 +65,6 @@
   environment:
     KUBEADM_BOOTSTRAP_TOKEN: "{{ KUBEADM_BOOTSTRAP_TOKEN }}"
     KUBEADM_UPLOADED_CERTS: "{{ KUBEADM_UPLOADED_CERTS }}"
-  ignore_errors: true
 
 - name: template
   ansible.builtin.template:
@@ -75,21 +72,18 @@
     dest: /tmp/join_kubeadm_wk.yaml
   environment:
     KUBEADM_BOOTSTRAP_TOKEN: "{{ KUBEADM_BOOTSTRAP_TOKEN }}"
-  ignore_errors: true
 
 - name: fetch joinfile cp
   ansible.builtin.fetch:
     src: "/tmp/join_kubeadm_cp.yaml"
     dest: "./files/fetch/"
     flat: true
-  ignore_errors: true
 
 - name: fetch joinfile wk
   ansible.builtin.fetch:
     src: "/tmp/join_kubeadm_wk.yaml"
     dest: "./files/fetch/"
     flat: true
-  ignore_errors: true
 
 - name: blockinfile .bashrc
   ansible.builtin.blockinfile:
