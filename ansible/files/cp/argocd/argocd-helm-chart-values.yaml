@@ -27,9 +27,6 @@ server:
     kustomize.buildOptions: --load-restrictor LoadRestrictionsNone
   service:
     type: NodePort
-    # annotations:  # GCP LB BackendConfig
-    #   cloud.google.com/backend-config: '{"ports": {"http":"argocd-backend-config"}}'
-    #   cloud.google.com/neg: '{"ingress": true}'
 
 controller:
   enableStatefulSet: true
