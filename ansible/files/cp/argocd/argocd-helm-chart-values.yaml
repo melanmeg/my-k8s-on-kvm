@@ -112,7 +112,7 @@ configs:
           name: github
           config:
             clientID: Ov23liMJpaJYp6m4ABrL
-            clientSecret: $dex.github.clientSecret
+            clientSecret: $password
   rbac:
     policy.default: ""
     scopes: "[openid, profile, email, groups]"
