@@ -15,7 +15,7 @@ $ helm repo add 1password https://1password.github.io/connect-helm-charts/
 $ helm install connect 1password/connect \
   --version 1.8.1 \
   --create-namespace \
-  --namespace 1password \
+  --namespace onepassword \
   --set-file connect.credentials=1password-credentials.json \
   --set-file operator.token.value=connect_api_token.txt \
   --values values.yaml
@@ -29,10 +29,18 @@ apiVersion: onepassword.com/v1
 kind: OnePasswordItem
 metadata:
   name: my-secret
-  namespace: 1password
+  namespace: onepassword
 spec:
   itemPath: "vaults/my-vault/items/my-login"
 EOF
 
-$ kubectl get secret -n 1password -o yaml
+$ kubectl get secret -n onepassword -o yaml
+```
+
+- external-secrets
+
+```bash
+$ kubectl apply -f onepassword-connect-token.yaml
+$ kubectl apply -f secret-store.yaml
+$ kubectl apply -f external-secrets.yaml
 ```
