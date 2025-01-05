@@ -35,28 +35,22 @@
   args:
     executable: /bin/bash
 
-# 5回実行する（一発ですべて検知されない場合があるため）
-- name: shell directpv discover
+# 数回実行する（一発ですべて検知されない場合があるため）
+- name: shell directpv init
   ansible.builtin.shell: |
     PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-    kubectl directpv discover --timeout 10s --quiet
-    sleep 8
-  args:
-    chdir: /tmp
-    executable: /bin/bash
-  loop: "{{ range(5) | list }}"
-  loop_control:
-    loop_var: my_item
-  ignore_errors: true
-
-- name: shell directpv init
-  ansible.builtin.shell: PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" kubectl directpv init drives.yaml --dangerous --quiet
-  args:
-    chdir: /tmp
-    executable: /bin/bash
-
-- name: shell directpv info
-  ansible.builtin.shell: PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" kubectl directpv info
+    drives=0
+    max_retries=10
+    retry_count=0
+    while [ "$drives" -ne 3 ] && [ "$retry_count" -lt "$max_retries" ]; do
+      echo "Retry count: $((retry_count + 1))/$max_retries"
+      sleep 5
+      kubectl directpv discover --timeout 10s --quiet > /dev/null 2>&1
+      kubectl directpv init drives.yaml --dangerous --quiet > /dev/null 2>&1
+      drives=$(kubectl directpv info | tail -n 1 | awk -F', ' '{print $NF}' | awk '{print $1}')
+      retry_count=$((retry_count + 1))
+    done
+    kubectl directpv info
   args:
     chdir: /tmp
     executable: /bin/bash
