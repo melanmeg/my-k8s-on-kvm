@@ -36,21 +36,30 @@
     executable: /bin/bash
 
 # 数回実行する（一発ですべて検知されない場合があるため）
-- name: shell directpv init
+- name: shell directpv discover
   ansible.builtin.shell: |
     PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
     drives=0
-    max_retries=10
+    max_retries=30
     retry_count=0
     while [ "$drives" -ne 3 ] && [ "$retry_count" -lt "$max_retries" ]; do
       echo "Retry count: $((retry_count + 1))/$max_retries"
       sleep 5
-      kubectl directpv discover --timeout 10s --quiet > /dev/null 2>&1
-      kubectl directpv init drives.yaml --dangerous --quiet > /dev/null 2>&1
-      drives=$(kubectl directpv info | tail -n 1 | awk -F', ' '{print $NF}' | awk '{print $1}')
+      drives=$(kubectl directpv discover --timeout 10s --quiet | awk '$4 != "NODE" && $4 != "" {print $4}' | wc -l)
       retry_count=$((retry_count + 1))
     done
-    kubectl directpv info
+  args:
+    chdir: /tmp
+    executable: /bin/bash
+
+- name: shell directpv init
+  ansible.builtin.shell: PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" kubectl directpv init drives.yaml --dangerous --quiet
+  args:
+    chdir: /tmp
+    executable: /bin/bash
+
+- name: shell directpv info
+  ansible.builtin.shell: PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" kubectl directpv info
   args:
     chdir: /tmp
     executable: /bin/bash
