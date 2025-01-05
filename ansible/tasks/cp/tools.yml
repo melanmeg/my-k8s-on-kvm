@@ -16,3 +16,10 @@
 #   ansible.builtin.shell: |
 #     curl -L https://github.com/getsops/sops/releases/download/v3.9.2/sops-v3.9.2.linux.amd64 -o /usr/local/bin/sops
 #     chmod +x /usr/local/bin/sops
+
+# - name: shell longhornctl
+#   become: true
+#   ansible.builtin.shell: |
+#     curl -L https://github.com/longhorn/cli/releases/download/v1.7.2/longhornctl-linux-amd64 -o longhornctl
+#     chmod +x longhornctl
+#     mv ./longhornctl /usr/local/bin/longhornctl
