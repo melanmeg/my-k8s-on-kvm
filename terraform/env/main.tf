@@ -20,8 +20,8 @@ module k8s-cp-libvirt {
 
   vm_count  = 1
   vm_name   = "test-k8s-cp" # $VM_NAME-$VM_COUNT
-  vcpu      = 2
-  memory    = 4096
+  vcpu      = 4
+  memory    = 8192 # In case of 4096, oomkilled by argocd
   size      = 30 # GiB
   autostart = false
   first_ip  = "192.168.11.141" # $FIRST_IP + $VM_COUNT
@@ -37,16 +37,16 @@ module k8s-wk-libvirt {
 
   vm_count    = 3
   vm_name     = "test-k8s-wk" # $VM_NAME-$VM_COUNT
-  vcpu        = 2 # 4
-  memory      = 4096 # 16384
+  vcpu        = 8
+  memory      = 16384
   size        = 30 # GiB
   data_disk_1 = {
     enable = true
-    size   = 20 # GiB
+    size   = 40 # GiB
   }
   data_disk_2 = {
     enable = true
-    size   = 20 # GiB
+    size   = 40 # GiB
   }
   autostart   = false
   first_ip    = "192.168.11.151" # $FIRST_IP + $VM_COUNT
