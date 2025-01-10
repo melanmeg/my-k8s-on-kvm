@@ -12,9 +12,9 @@
     src: ./files/cp/argocd/kustomization.yaml
     dest: /tmp/argocd/kustomization.yaml
 
-- name: copy
-  ansible.builtin.copy:
-    src: ./files/cp/argocd/argocd-apps-helm-chart-values.yaml
+- name: template
+  ansible.builtin.template:
+    src: ./files/cp/argocd/argocd-apps-helm-chart-values.yaml.j2
     dest: /tmp/argocd-apps-helm-chart-values.yaml
 
 - name: shell kubectl apply -k cluster-install
