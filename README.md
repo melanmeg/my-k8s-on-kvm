@@ -18,7 +18,7 @@ $ terraform providers lock -platform=linux_amd64
 
 ```bash
 $ cd terraform/modules/common/
-$ wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+$ aria2c -d . -x 16 -s 16 -k 1M -o ./noble-server-cloudimg-amd64.img  https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
 ```
 
 ### LB の修正
@@ -55,8 +55,4 @@ $ ./recreate-k8s.sh
 $ terraform -chdir=./terraform/env destroy -auto-approve -input=false
 # nfsを使っている場合、base2で実行する
 $ sudo rm -rf /mnt/nfsshare/k8s/share/*
-```
-
-```bash
-$ kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
