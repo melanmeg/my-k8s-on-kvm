@@ -15,6 +15,7 @@ lists = {
     ( 'opensearch',           '192.168.11.161', '8087', '30009' ),
     ( 'opensearch-dashboard', '192.168.11.161', '8088', '30010' ),
     ( 'twicas-monitoring',    '192.168.11.161', '8089', '30011' ),
+    ( 'rabbitmq',             '192.168.11.161', '8090', '30012' ),
 }
 
 # config gen haproxy
