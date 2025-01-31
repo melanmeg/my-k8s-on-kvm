@@ -46,6 +46,9 @@ $ cd ./ansible/files/lb/config_gen && \
 ## Usage
 
 ```bash
+# エラーとなった場合
+$ terraform import module.k8s-common-libvirt.libvirt_pool.pool terraform-pool
+
 $ ./recreate-k8s.sh
 ```
 
